@@ -1,0 +1,32 @@
+{
+  "prayer": {
+    "fajr": "الفجر",
+    "sunrise": "الشروق",
+    "dhuhr": "الظهر",
+    "asr": "العصر",
+    "maghrib": "المغرب",
+    "isha": "العشاء"
+  },
+  "home": {
+    "nextPrayer": "الصلاة القادمة",
+    "inMinutes_zero": "الآن",
+    "inMinutes_one": "بعد دقيقة واحدة",
+    "inMinutes_two": "بعد دقيقتين",
+    "inMinutes_few": "بعد {{count}} دقائق",
+    "inMinutes_many": "بعد {{count}} دقيقة",
+    "inMinutes_other": "بعد {{count}} دقيقة",
+    "today": "اليوم",
+    "estimated": "تقديري (خط عرض مرتفع)",
+    "locationPlaceholder": "مواقيت {{city}} · تحديد الموقع قريباً"
+  },
+  "garden": {
+    "empty": "حديقتك تبدأ بصلاة فجر واحدة.",
+    "streak_zero": "لا أيام بعد",
+    "streak_one": "يوم واحد",
+    "streak_two": "يومان",
+    "streak_few": "{{count}} أيام",
+    "streak_many": "{{count}} يوماً",
+    "streak_other": "{{count}} يوم",
+    "resting": "استراحت حديقتك اليوم."
+  }
+}

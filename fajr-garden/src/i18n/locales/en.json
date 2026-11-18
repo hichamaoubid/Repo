@@ -1,0 +1,24 @@
+{
+  "prayer": {
+    "fajr": "Fajr",
+    "sunrise": "Sunrise",
+    "dhuhr": "Dhuhr",
+    "asr": "Asr",
+    "maghrib": "Maghrib",
+    "isha": "Isha"
+  },
+  "home": {
+    "nextPrayer": "Next prayer",
+    "inMinutes_one": "in {{count}} minute",
+    "inMinutes_other": "in {{count}} minutes",
+    "today": "Today",
+    "estimated": "Estimated (high latitude)",
+    "locationPlaceholder": "Times for {{city}} · location comes next"
+  },
+  "garden": {
+    "empty": "Your garden starts with one Fajr.",
+    "streak_one": "{{count}} day kept",
+    "streak_other": "{{count}} days kept",
+    "resting": "Your garden rested today."
+  }
+}

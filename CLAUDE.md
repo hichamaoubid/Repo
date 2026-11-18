@@ -34,4 +34,10 @@ For multi-step projects:
 4. Don't stray from the task.
 
 ## Project status
-The repository is newly initialized. No stack or tooling has been chosen yet. Update this section once a language, framework, test runner, and build/lint commands are in place.
+- **Product:** Fajr Garden, a family Islamic prayer habit app. Spec: `prd_outputs/Fajr Garden/fajr_garden_PRD.md`.
+- **App:** `fajr-garden/`, Expo SDK 58 + React Native + Expo Router (routes in `src/app/`), TypeScript strict.
+- **Domain logic:** pure TypeScript in `fajr-garden/src/lib/*` (prayer times, qibla, streak) with no React imports. Test it first.
+- **Commands** (run inside `fajr-garden/`): `npm test`, `npm run typecheck`, `npm run lint`, `npx expo start`. Install packages with `npx expo install`.
+- **Test runner:** Jest with babel-preset-expo, Node environment, files `*.test.ts`.
+- **CI:** `.github/workflows/ci.yml` runs typecheck, lint and tests.
+- Read `fajr-garden/AGENTS.md` before touching any Expo API: check the SDK 58 docs, not memory.
