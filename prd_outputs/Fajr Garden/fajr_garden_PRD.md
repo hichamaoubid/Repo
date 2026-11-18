@@ -1,7 +1,7 @@
 # Fajr Garden — Product Requirements Document
 
-**Version:** 1.0
-**Date:** 2026-11-17
+**Version:** 1.1
+**Date:** 2026-11-18
 **Author:** PRD Generator
 **Status:** Draft
 **Scope:** MVP (v1.0), iOS and Android simultaneous launch
@@ -82,7 +82,7 @@ Fajr Garden is a family app for iOS and Android that helps Muslims, children age
 
 ## 6. Functional Requirements
 
-Priority split: P0 = 8 (36%), P1 = 9 (41%), P2 = 5 (23%).
+Priority split: P0 = 8 (36%), P1 = 10 (45%), P2 = 4 (18%).
 
 ### Onboarding & Accounts
 
@@ -420,15 +420,50 @@ Priority split: P0 = 8 (36%), P1 = 9 (41%), P2 = 5 (23%).
 **Priority:** P2 (v1.1, after a feasibility spike)
 **Dependencies:** FR-007
 
-#### FR-022: Light Ramadan teaser
-**Description:** During Ramadan 2027, suhoor and iftar times and a suhoor alarm preset.
+#### FR-022: Ramadan program, "30 Lanterns" (habits of the Prophet ﷺ in Ramadan)
+**Description:** During Ramadan, the app runs a 30-night program built around what the Prophet ﷺ did in that month, with every habit backed by an evidence card (Arabic text, translation, source, grading, reviewer).
+
+**User story:** As Omar, I want to follow the Prophet's ﷺ Ramadan routine (suhoor, Fajr, iftar, qiyam, the last ten nights) one night at a time, and to know where each practice comes from, so that my Ramadan is structured by the Sunnah rather than by an app's invented rules.
+
+**Habit set and evidence** (references to be verified word for word by the advisory board before release, FR-020. "Checked" means the reference was confirmed against a hadith database during drafting; "To verify" means it was cited from memory):
+
+| # | Habit | What the Prophet ﷺ did or taught | Reference | Status |
+|---|-------|-----------------------------------|-----------|--------|
+| 1 | Late suhoor | "Take suhoor, for in suhoor there is blessing." The gap between suhoor and the prayer was about 50 verses | Bukhari 1923, Muslim 1095; Bukhari 1921, Muslim 1097 | To verify |
+| 2 | Fajr | The two rak'ahs before Fajr are better than the world and what it contains | Muslim 725 | To verify |
+| 3 | Prompt iftar, with dates | "People remain upon good as long as they hasten to break the fast." He broke his fast with fresh dates, else dried dates, else water | Bukhari 1957, Muslim 1098; Abu Dawud 2356 | To verify |
+| 4 | Guarding the tongue | "Whoever does not give up false speech and acting on it, Allah has no need of him leaving his food and drink." "Fasting is a shield… say: I am fasting" | Bukhari 1903; Bukhari 1904, Muslim 1151 | To verify |
+| 5 | Daily Quran | Jibril met him every night of Ramadan to study the Quran, and reviewed it twice in his final year | Bukhari 6; Bukhari 3624 | Checked |
+| 6 | Generosity, feeding a fasting person | He was most generous in Ramadan, "faster than the blowing wind." Whoever feeds a fasting person gets the same reward without reducing theirs | Bukhari 6, Muslim 2308; Tirmidhi 807 | Checked |
+| 7 | Qiyam / Taraweeh | "Whoever stands in Ramadan with faith and seeking reward is forgiven his past sins." Praying with the imam until he finishes counts as the whole night. He did not exceed 11 rak'ahs, in Ramadan or otherwise | Bukhari 37, Muslim 759; Tirmidhi 806; Bukhari 1147, Muslim 738 | 806, 1147/738 checked; 37/759 to verify |
+| 8 | Tahajjud in the last third of the night | Allah descends to the lowest heaven in the last third of every night | Bukhari 1145, Muslim 758 | To verify |
+| 9 | Last ten nights: revive them, wake the family | "When the last ten began, he tightened his waist-wrapper, prayed all night, and woke his family." He strove in the last ten more than at any other time | Bukhari 2024, Muslim 1174; Muslim 1175 | 2024/1174 checked |
+| 10 | Seek Laylat al-Qadr | Seek it in the odd nights of the last ten. The dua he taught Aisha: "Allahumma innaka 'afuwwun tuhibbul-'afwa fa'fu 'anni" | Bukhari 2017; Tirmidhi 3513 | To verify |
+| 11 | I'tikaf (optional) | He did i'tikaf in the last ten nights until he passed away | Bukhari 2026, Muslim 1172 | To verify |
+| 12 | Zakat al-Fitr | To be given before the people go out to the Eid prayer | Bukhari 1503, Muslim 984 | To verify |
+| 13 | Six days of Shawwal (after Ramadan) | "Whoever fasts Ramadan and follows it with six of Shawwal, it is as if he fasted for a lifetime" | Muslim 1164 | To verify |
+| — | Principle behind the whole program | "The most beloved deeds to Allah are the most consistent, even if small" | Bukhari 6464, Muslim 783 | To verify |
 
 **Acceptance criteria:**
-- [ ] Suhoor alarm preset = Fajr − 45 min using the FR-006 engine. Iftar = Maghrib notification.
-- [ ] Auto-enabled during Ramadan based on the Umm al-Qura calendar, with a manual ±1 day adjustment for local moon sighting.
+- [ ] **Ramadan detection:** starts automatically on 1 Ramadan computed with the Umm al-Qura calendar, with a ±1 day manual adjustment per household for local moon sighting. A preview "Get ready" screen opens 7 days before.
+- [ ] **Day timeline:** the habits appear in the order of the user's actual day, driven by FR-003 prayer times: suhoor → Fajr → daily Quran → iftar → Isha + qiyam → (last ten) tahajjud.
+- [ ] **Suhoor alarm:** a preset on the FR-006 engine at Fajr − N minutes (default 20, range 10–60), explained with the "50 verses" evidence card.
+- [ ] **Tahajjud alarm:** a preset at the start of the last third of the night, computed as Fajr − (Fajr − Maghrib) / 3 for the user's location (pure function in `lib/prayer`, unit-tested including high latitudes). It uses the same missions as the Fajr alarm (FR-007), Stand & Perform by default.
+- [ ] **Family wake chain (last ten nights):** a parent can link their tahajjud or suhoor alarm to other household profiles, so that their phones ring in turn after the parent completes the mission, following Bukhari 2024 ("he woke his family"). Each member can opt out. Children's devices ring only within the parent-set window.
+- [ ] **Qiyam check-in:** a single private check-in ("I prayed qiyam", with "with the imam until the end" as an option). The app never asks for or scores a number of rak'ahs. The evidence card presents the 11 rak'ah report and notes that scholars accept other counts (e.g. 20 under 'Umar), with the advisory board's wording.
+- [ ] **Daily Quran plan:** a khatm planner (1, 2 or 3 completions, or a custom number of pages per day) that redistributes missed pages over the remaining days instead of showing a deficit.
+- [ ] **Generosity:** a private daily "gave or fed someone" check-in, plus a link to "Sponsor a learner" (FR-017) during Ramadan.
+- [ ] **Tongue check:** an optional evening self-reflection with no answer stored server-side.
+- [ ] **30 Lanterns (gamification):** each night lights one lantern in the user's garden when they complete at least one habit of that night. The last ten lanterns are larger, and the odd nights carry a star. No points, no percentages, no comparison between people. Lanterns never go out; an unlit night simply stays dark.
+- [ ] **Family lantern:** a shared lantern lights on nights when every household member who opted in completed suhoor or iftar together.
+- [ ] **Kids mode:** children see age-appropriate habits (practice fasts as defined by the parent, iftar dua, helping prepare iftar, a short surah per day). The app never asks a child to fast.
+- [ ] **Evidence cards:** every habit has a "Why?" card with the Arabic text, translation in the profile language, reference, grading and "Reviewed by" line (FR-020). No habit ships without a card approved by the board.
+- [ ] **Eid recap (opt-in):** on Eid, a shareable image of the garden with its 30 lanterns, without any counts, times or worship statistics. Sharing is off by default.
+- [ ] **After Ramadan:** a Shawwal continuation offers 6 fasting days (Muslim 1164) and turns the Ramadan habits the user kept into a lighter year-round routine, to protect retention after the month.
+- [ ] **Pricing:** the core program (timeline, suhoor and iftar, check-ins, lanterns, evidence cards) is free for everyone during Ramadan. The tahajjud camera mission, family wake chain and khatm planner are Premium.
 
-**Priority:** P2
-**Dependencies:** FR-003, FR-006
+**Priority:** P1. Target: public beta before Ramadan 1448 (expected to begin around 8 February 2027, subject to moon sighting).
+**Dependencies:** FR-003, FR-006, FR-007, FR-012, FR-013, FR-017, FR-020
 
 ---
 
@@ -1109,3 +1144,4 @@ Precise coordinates are **not** stored server-side. Only a city id is stored, if
 3. Is the follow-up alarm chain on iOS acceptable to App Review? Validate early with a TestFlight build.
 4. Does the tarteel-ai Whisper checkpoint's license allow commercial on-device use (needed for FR-021)?
 5. Should wake-up partners be possible between a parent and a teenage child (13+) in the same household?
+6. Before Ramadan 1448, the advisory board must verify every reference in the FR-022 evidence table word for word, and approve the wording on qiyam rak'ah counts. Can that review be completed by mid-January 2027?
