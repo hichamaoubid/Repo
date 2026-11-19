@@ -1,0 +1,82 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="expo.modules.fgalarm" >
+4
+5    <uses-sdk android:minSdkVersion="24" />
+5-->INJECTED
+5-->INJECTED
+6    <!-- Alarm-clock apps may declare USE_EXACT_ALARM (granted at install, Android 13+). -->
+7    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+7-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:3:3-72
+7-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:3:20-69
+8    <uses-permission
+8-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:4:3-104
+9        android:name="android.permission.SCHEDULE_EXACT_ALARM"
+9-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:4:20-74
+10        android:maxSdkVersion="32" />
+10-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:4:75-101
+11    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+11-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:5:3-79
+11-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:5:20-76
+12    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+12-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:6:3-75
+12-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:6:20-72
+13    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+13-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:7:3-79
+13-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:7:20-76
+14    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+14-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:8:3-75
+14-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:8:20-72
+15    <!-- Allowed for apps holding USE_EXACT_ALARM / SCHEDULE_EXACT_ALARM. -->
+16    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SYSTEM_EXEMPTED" />
+16-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:10:3-91
+16-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:10:20-88
+17    <uses-permission android:name="android.permission.VIBRATE" />
+17-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:11:3-64
+17-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:11:20-61
+18    <uses-permission android:name="android.permission.WAKE_LOCK" />
+18-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:12:3-66
+18-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:12:20-63
+19
+20    <application>
+20-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:14:3-28:17
+21        <receiver
+21-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:15:5-92
+22            android:name="expo.modules.fgalarm.AlarmReceiver"
+22-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:15:15-64
+23            android:exported="false" />
+23-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:15:65-89
+24        <receiver
+24-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:16:5-23:16
+25            android:name="expo.modules.fgalarm.BootReceiver"
+25-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:16:15-63
+26            android:exported="true" >
+26-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:16:64-87
+27            <intent-filter>
+27-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:17:7-22:23
+28                <action android:name="android.intent.action.BOOT_COMPLETED" />
+28-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:18:9-71
+28-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:18:17-68
+29                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+29-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:19:9-76
+29-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:19:17-73
+30                <action android:name="android.intent.action.TIME_SET" />
+30-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:20:9-65
+30-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:20:17-62
+31                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+31-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:21:9-73
+31-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:21:17-70
+32            </intent-filter>
+33        </receiver>
+34
+35        <service
+35-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:24:5-27:56
+36            android:name="expo.modules.fgalarm.RingingService"
+36-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:25:7-57
+37            android:exported="false"
+37-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:26:7-31
+38            android:foregroundServiceType="systemExempted" />
+38-->/home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/AndroidManifest.xml:27:7-53
+39    </application>
+40
+41</manifest>

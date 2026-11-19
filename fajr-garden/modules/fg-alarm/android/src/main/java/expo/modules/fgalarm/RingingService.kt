@@ -17,6 +17,7 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.os.PowerManager
+import android.os.VibrationAttributes
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
@@ -121,11 +122,14 @@ class RingingService : Service() {
     }
 
   private fun startVibration() {
-    val pattern = longArrayOf(0, 800, 600)
-    vibrator()?.vibrate(
-      VibrationEffect.createWaveform(pattern, 0),
-      AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).build(),
-    )
+    val effect = VibrationEffect.createWaveform(longArrayOf(0, 800, 600), 0)
+    val vibrator = vibrator() ?: return
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+      vibrator.vibrate(effect, VibrationAttributes.createForUsage(VibrationAttributes.USAGE_ALARM))
+    } else {
+      @Suppress("DEPRECATION")
+      vibrator.vibrate(effect, AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).build())
+    }
   }
 
   private fun acquireWakeLock() {

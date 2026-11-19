@@ -1,0 +1,9 @@
+expo.modules.fgalarm.fg-alarm-pngs-0 /home/user/Repo/fajr-garden/modules/fg-alarm/android/build/generated/res/pngs/debug
+expo.modules.fgalarm.fg-alarm-updated_navigation_xml-1 /home/user/Repo/fajr-garden/modules/fg-alarm/android/build/generated/updated_navigation_xml/debug
+expo.modules.fgalarm.fg-alarm-mergeDebugResources-2 /home/user/Repo/fajr-garden/modules/fg-alarm/android/build/intermediates/incremental/debug/mergeDebugResources/merged.dir
+expo.modules.fgalarm.fg-alarm-mergeDebugResources-3 /home/user/Repo/fajr-garden/modules/fg-alarm/android/build/intermediates/incremental/debug/mergeDebugResources/stripped.dir
+expo.modules.fgalarm.fg-alarm-debug-4 /home/user/Repo/fajr-garden/modules/fg-alarm/android/build/intermediates/merged_res/debug/mergeDebugResources
+expo.modules.fgalarm.fg-alarm-debug-5 /home/user/Repo/fajr-garden/modules/fg-alarm/android/build/intermediates/packaged_res/debug/packageDebugResources
+expo.modules.fgalarm.fg-alarm-debug-6 /home/user/Repo/fajr-garden/modules/fg-alarm/android/src/debug/res
+expo.modules.fgalarm.fg-alarm-main-7 /home/user/Repo/fajr-garden/modules/fg-alarm/android/src/main/res
+gradleHome-0 /root/.gradle
