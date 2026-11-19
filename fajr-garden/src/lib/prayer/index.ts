@@ -361,3 +361,21 @@ export function nextPrayer(
   // Unreachable in practice: tomorrow's Isha is always after now.
   throw new Error('no upcoming prayer found');
 }
+
+/**
+ * Which day's schedule to show: today until Isha has passed, then tomorrow, so the
+ * highlighted "next prayer" row always matches the next prayer card.
+ */
+export function scheduleDateFor(
+  now: Date,
+  coords: Coords,
+  settings: PrayerSettings,
+  timeZone: string,
+  options: ComputeOptions = {},
+): { date: LocalDate; isTomorrow: boolean } {
+  const today = localDateIn(now, timeZone);
+  const next = nextPrayer(now, coords, settings, timeZone, options);
+  const date = localDateIn(next.time, timeZone);
+  const isTomorrow = date.year !== today.year || date.month !== today.month || date.day !== today.day;
+  return { date, isTomorrow };
+}

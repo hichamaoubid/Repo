@@ -70,7 +70,7 @@ function TodayView({ day, now }: { day: PrayerDay; now: Date }) {
       </View>
 
       <View style={styles.list}>
-        <Text style={[styles.sectionTitle, { color: palette.text }]}>{t('home.today')}</Text>
+        <Text style={[styles.sectionTitle, { color: palette.text }]}>{t(day.isTomorrow ? 'home.tomorrow' : 'home.today')}</Text>
         {ROWS.map((row) => {
           const isNext = row === next.name;
           const color = isNext ? palette.onAccent : palette.text;

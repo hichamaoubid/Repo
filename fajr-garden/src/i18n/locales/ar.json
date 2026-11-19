@@ -21,7 +21,8 @@
     "timesFor": "مواقيت الصلاة في {{city}}",
     "setLocationTitle": "أين أنت؟",
     "setLocationBody": "تعتمد مواقيت الصلاة على موقعك.",
-    "openSettings": "الإعدادات"
+    "openSettings": "الإعدادات",
+    "tomorrow": "غداً"
   },
   "garden": {
     "empty": "حديقتك تبدأ بصلاة فجر واحدة.",

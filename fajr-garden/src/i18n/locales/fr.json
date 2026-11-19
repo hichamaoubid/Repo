@@ -18,7 +18,8 @@
     "timesFor": "Horaires de prière pour {{city}}",
     "setLocationTitle": "Où es-tu ?",
     "setLocationBody": "Les horaires de prière dépendent de ta position.",
-    "openSettings": "Réglages"
+    "openSettings": "Réglages",
+    "tomorrow": "Demain"
   },
   "garden": {
     "empty": "Ton jardin commence avec un Fajr.",

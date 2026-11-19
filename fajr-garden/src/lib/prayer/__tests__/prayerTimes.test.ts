@@ -7,6 +7,7 @@ import {
   defaultSettings,
   nextPrayer,
   PRAYER_ORDER,
+  scheduleDateFor,
   type MethodKey,
   type PrayerSettings,
 } from '..';
@@ -245,5 +246,26 @@ describe('defaultMethodForCountry', () => {
 describe('PRAYER_ORDER', () => {
   it('lists the five obligatory prayers', () => {
     expect(PRAYER_ORDER).toEqual(['fajr', 'dhuhr', 'asr', 'maghrib', 'isha']);
+  });
+});
+
+describe('scheduleDateFor', () => {
+  const casablanca = { latitude: 33.5731, longitude: -7.5898 };
+  const tz = 'Africa/Casablanca';
+  const settings = { ...defaultSettings, method: 'morocco' as const };
+
+  it('shows today during the day', () => {
+    const now = new Date('2026-11-19T13:00:00Z');
+    expect(scheduleDateFor(now, casablanca, settings, tz)).toEqual({ date: { year: 2026, month: 11, day: 19 }, isTomorrow: false });
+  });
+
+  it("switches to tomorrow's schedule once Isha has passed", () => {
+    const now = new Date('2026-11-19T22:11:00Z'); // after Isha in Casablanca
+    expect(scheduleDateFor(now, casablanca, settings, tz)).toEqual({ date: { year: 2026, month: 11, day: 20 }, isTomorrow: true });
+  });
+
+  it('after midnight the schedule is today again', () => {
+    const now = new Date('2026-11-20T01:00:00Z');
+    expect(scheduleDateFor(now, casablanca, settings, tz)).toEqual({ date: { year: 2026, month: 11, day: 20 }, isTomorrow: false });
   });
 });

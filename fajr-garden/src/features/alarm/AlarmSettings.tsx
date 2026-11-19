@@ -1,3 +1,4 @@
+import { formatInTimeZone } from 'date-fns-tz';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Switch, Text, View } from 'react-native';
@@ -53,9 +54,11 @@ export function AlarmSettings({ settings, palette }: { settings: AppSettings; pa
     alarm.enabled && location
       ? planFajrAlarms({ now: new Date(), coords: location, timeZone: location.timeZone, prayer: settings.prayer, alarm, days: 1, followUpDays: 0 })[0]
       : undefined;
-  const nextLabel = next
-    ? next.fireAt.toLocaleString(i18n.language, { weekday: 'long', hour: '2-digit', minute: '2-digit', timeZone: location?.timeZone })
-    : null;
+  // Same 24-hour format as the rest of the app; only the weekday is localised.
+  const nextLabel =
+    next && location
+      ? `${next.fireAt.toLocaleDateString(i18n.language, { weekday: 'long', timeZone: location.timeZone })} ${formatInTimeZone(next.fireAt, location.timeZone, 'HH:mm')}`
+      : null;
 
   const text = { color: palette.text };
   const muted = { color: palette.textMuted };

@@ -13,7 +13,7 @@ const SIX_HOURS = 6 * 3_600_000;
  * One-off, foreground-only location fix for prayer times. No background location, no
  * continuous tracking; the result is rounded to about 1 km before it is returned.
  */
-export async function locateDevice(): Promise<LocateResult> {
+export async function locateDevice(options: { arabicLabel?: boolean } = {}): Promise<LocateResult> {
   const { status } = await Location.requestForegroundPermissionsAsync();
   if (status !== 'granted') return { ok: false, reason: 'denied' };
 
@@ -28,19 +28,25 @@ export async function locateDevice(): Promise<LocateResult> {
   if (!position) return { ok: false, reason: 'unavailable' };
 
   const coords = coarsenCoords(position.coords);
-  const fallback = nearestCity(getCities(), coords);
+  const city = nearestCity(getCities(), coords);
 
-  let label = fallback?.name ?? `${coords.latitude}, ${coords.longitude}`;
-  let country = fallback?.country ?? '';
+  // The label comes from the bundled dataset: consistent names, available in Arabic. The
+  // platform geocoder can return historical or administrative names (for example
+  // "Dar-el-Beida" for Casablanca), so it is only used for the country, which it knows
+  // better near borders.
+  let label = (options.arabicLabel && city?.arabicNames[0]) || city?.name || `${coords.latitude}, ${coords.longitude}`;
+  let country = city?.country ?? '';
   if (Platform.OS !== 'web') {
     try {
       const [place] = await Location.reverseGeocodeAsync(coords);
-      if (place?.city) label = place.city.slice(0, 80);
       if (place?.isoCountryCode && /^[A-Z]{2}$/.test(place.isoCountryCode)) country = place.isoCountryCode;
+      if (!city && place?.city) label = place.city;
     } catch {
-      // Geocoding is best effort; the nearest city from the bundled dataset is used instead.
+      // Geocoding is best effort; the dataset's country is used instead.
     }
   }
+  label = label.slice(0, 80);
+  const fallback = city;
 
   // The device's own zone drives its clock, so alarms must use it.
   const deviceZone = getCalendars()[0]?.timeZone;

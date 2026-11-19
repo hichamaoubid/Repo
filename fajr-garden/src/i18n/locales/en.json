@@ -17,7 +17,8 @@
     "timesFor": "Prayer times for {{city}}",
     "setLocationTitle": "Where are you?",
     "setLocationBody": "Prayer times depend on your location.",
-    "openSettings": "Settings"
+    "openSettings": "Settings",
+    "tomorrow": "Tomorrow"
   },
   "garden": {
     "empty": "Your garden starts with one Fajr.",
