@@ -1,9 +1,13 @@
 name: CI
 
 on:
+  # Pull requests get one run each. Pushes run only on the base branches, so a push
+  # to a PR branch no longer triggers a second, duplicate run.
   pull_request:
   push:
-    branches-ignore: ['dependabot/**']
+    branches:
+      - main
+      - ccr-2bb69a2d-modrxj # current default branch of the repository
 
 permissions:
   contents: read
