@@ -23,7 +23,16 @@
     },
     "plugins": [
       "expo-localization",
-      "expo-router"
+      "expo-router",
+      "expo-sqlite",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Fajr Garden uses your location once to calculate prayer times and the qibla. It is rounded to about 1 km and stays on your phone.",
+          "isIosBackgroundLocationEnabled": false,
+          "isAndroidBackgroundLocationEnabled": false
+        }
+      ]
     ],
     "scheme": "fajrgarden",
     "experiments": {

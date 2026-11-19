@@ -14,7 +14,11 @@
     "inMinutes_other": "dans {{count}} minutes",
     "today": "Aujourd'hui",
     "estimated": "Estimé (haute latitude)",
-    "locationPlaceholder": "Horaires pour {{city}} · la localisation arrive bientôt"
+    "inDuration": "dans {{duration}}",
+    "timesFor": "Horaires de prière pour {{city}}",
+    "setLocationTitle": "Où es-tu ?",
+    "setLocationBody": "Les horaires de prière dépendent de ta position.",
+    "openSettings": "Réglages"
   },
   "garden": {
     "empty": "Ton jardin commence avec un Fajr.",
@@ -22,5 +26,62 @@
     "streak_many": "{{count}} jours tenus",
     "streak_other": "{{count}} jours tenus",
     "resting": "Ton jardin s'est reposé aujourd'hui."
+  },
+  "time": {
+    "hours_one": "{{count}} h",
+    "hours_many": "{{count}} h",
+    "hours_other": "{{count}} h",
+    "minutes_one": "{{count}} min",
+    "minutes_many": "{{count}} min",
+    "minutes_other": "{{count}} min",
+    "hoursAndMinutes": "{{hours}} {{minutes}}"
+  },
+  "settings": {
+    "title": "Réglages",
+    "location": "Position",
+    "useMyLocation": "Utiliser ma position",
+    "searchCity": "Chercher une ville",
+    "locating": "Recherche de ta position…",
+    "locationDenied": "L'accès à la position est désactivé. Tu peux chercher ta ville à la place.",
+    "locationUnavailable": "Impossible d'obtenir ta position. Réessaie ou cherche ta ville.",
+    "noLocation": "Aucune position choisie",
+    "privacyNote": "Ta position est arrondie à environ 1 km et reste sur ce téléphone.",
+    "method": "Méthode de calcul",
+    "automatic": "Automatique selon ton pays",
+    "asr": "Asr",
+    "asrStandard": "Standard (chaféite, malékite, hanbalite)",
+    "asrHanafi": "Hanafite",
+    "highLat": "Hautes latitudes",
+    "highLatAuto": "Automatique",
+    "highLatMiddle": "Milieu de la nuit",
+    "highLatSeventh": "Un septième de la nuit",
+    "highLatTwilight": "Angle du crépuscule",
+    "attribution": "Données des villes : GeoNames (CC BY 4.0)",
+    "selected": "Sélectionné"
+  },
+  "methods": {
+    "mwl": "Ligue islamique mondiale",
+    "isna": "ISNA (Amérique du Nord)",
+    "egyptian": "Autorité générale égyptienne du cadastre",
+    "umm_al_qura": "Umm al-Qura (La Mecque)",
+    "karachi": "Université des sciences islamiques, Karachi",
+    "dubai": "Dubaï",
+    "qatar": "Qatar",
+    "kuwait": "Koweït",
+    "singapore": "Singapour (MUIS)",
+    "turkey": "Diyanet (Turquie)",
+    "tehran": "Institut de géophysique, Téhéran",
+    "moonsighting": "Moonsighting Committee",
+    "france_uoif": "France (UOIF, 12°)",
+    "morocco": "Maroc (ministère des Habous)"
+  },
+  "citySearch": {
+    "title": "Chercher une ville",
+    "placeholder": "Nom de la ville",
+    "noResults": "Aucune ville trouvée",
+    "hint": "Tape au moins 2 lettres"
+  },
+  "common": {
+    "back": "Retour"
   }
 }

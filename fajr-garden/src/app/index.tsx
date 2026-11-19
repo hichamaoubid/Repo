@@ -1,20 +1,15 @@
 import { formatInTimeZone } from 'date-fns-tz';
+import { Link, router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { DEMO_CITY } from '../features/home/demoLocation';
+import { Button } from '../components/Button';
+import { NO_LOCATION_PALETTE, usePrayerDay, type PrayerDay } from '../features/home/usePrayerDay';
 import { useNow } from '../features/home/useNow';
-import {
-  computePrayerTimes,
-  defaultMethodForCountry,
-  defaultSettings,
-  localDateIn,
-  nextPrayer,
-  type TimeName,
-} from '../lib/prayer';
-import { paletteAt } from '../theme/sunPhase';
+import { useSettings } from '../features/settings/useSettings';
+import { formatCountdown } from '../i18n/format';
+import type { TimeName } from '../lib/prayer';
 import { fontSize, radius, space } from '../theme/tokens';
 
 const ROWS: TimeName[] = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
@@ -22,41 +17,67 @@ const ROWS: TimeName[] = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
 export default function HomeScreen() {
   const { t } = useTranslation();
   const now = useNow();
-  const { coords, timeZone, countryCode, name } = DEMO_CITY;
-  const settings = useMemo(() => ({ ...defaultSettings, method: defaultMethodForCountry(countryCode) }), [countryCode]);
-
-  const today = localDateIn(now, timeZone);
-  const times = useMemo(
-    () => computePrayerTimes(coords, today, settings),
-    // recompute once per local day
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [today.year, today.month, today.day, settings],
-  );
-  const next = nextPrayer(now, coords, settings, timeZone);
-  const minutes = Math.max(0, Math.round((next.time.getTime() - now.getTime()) / 60_000));
-  const palette = paletteAt(now, times);
-  const hhmm = (d: Date) => formatInTimeZone(d, timeZone, 'HH:mm');
+  const settings = useSettings();
+  const day = usePrayerDay(settings, now);
+  const palette = day?.palette ?? NO_LOCATION_PALETTE;
 
   return (
     <SafeAreaView style={[styles.screen, { backgroundColor: palette.background }]}>
       <StatusBar style={palette.scheme === 'dark' ? 'light' : 'dark'} />
-      <View style={[styles.card, { backgroundColor: palette.surface }]} accessible accessibilityLabel={`${t('home.nextPrayer')}: ${t(`prayer.${next.name}`)} ${hhmm(next.time)}, ${t('home.inMinutes', { count: minutes })}`}>
+      <View style={styles.topBar}>
+        <Link href="/settings" asChild>
+          <Pressable accessibilityRole="button" style={styles.settingsLink} hitSlop={8}>
+            <Text style={[styles.link, { color: palette.text }]}>{t('home.openSettings')}</Text>
+          </Pressable>
+        </Link>
+      </View>
+
+      {!day ? (
+        <View style={[styles.card, { backgroundColor: palette.surface }]}>
+          <Text accessibilityRole="header" style={[styles.title, { color: palette.text }]}>
+            {t('home.setLocationTitle')}
+          </Text>
+          <Text style={[styles.body, { color: palette.textMuted }]}>{t('home.setLocationBody')}</Text>
+          <Button label={t('settings.useMyLocation')} palette={palette} onPress={() => router.push('/settings')} />
+          <Button label={t('settings.searchCity')} palette={palette} variant="secondary" onPress={() => router.push('/city-search')} />
+        </View>
+      ) : (
+        <TodayView day={day} now={now} />
+      )}
+    </SafeAreaView>
+  );
+}
+
+function TodayView({ day, now }: { day: PrayerDay; now: Date }) {
+  const { t } = useTranslation();
+  const { next, times, location, palette } = day;
+  const hhmm = (d: Date) => formatInTimeZone(d, location.timeZone, 'HH:mm');
+  const minutes = Math.max(0, Math.round((next.time.getTime() - now.getTime()) / 60_000));
+  const countdown = formatCountdown(t, minutes);
+  return (
+    <>
+      <View
+        style={[styles.card, styles.heroCard, { backgroundColor: palette.surface }]}
+        accessible
+        accessibilityLabel={`${t('home.nextPrayer')}: ${t(`prayer.${next.name}`)} ${hhmm(next.time)}, ${countdown}`}
+      >
         <Text style={[styles.eyebrow, { color: palette.textMuted }]}>{t('home.nextPrayer')}</Text>
         <Text accessibilityRole="header" style={[styles.hero, { color: palette.text }]}>
           {t(`prayer.${next.name}`)}
         </Text>
         <Text style={[styles.time, { color: palette.text }]}>{hhmm(next.time)}</Text>
-        <Text style={[styles.body, { color: palette.textMuted }]}>{t('home.inMinutes', { count: minutes })}</Text>
+        <Text style={[styles.body, { color: palette.textMuted }]}>{countdown}</Text>
       </View>
 
-      <View style={styles.list} accessibilityRole="list">
+      <View style={styles.list}>
         <Text style={[styles.sectionTitle, { color: palette.text }]}>{t('home.today')}</Text>
         {ROWS.map((row) => {
           const isNext = row === next.name;
+          const color = isNext ? palette.onAccent : palette.text;
           return (
             <View key={row} style={[styles.row, isNext && { backgroundColor: palette.accent }]}>
-              <Text style={[styles.body, { color: isNext ? palette.onAccent : palette.text }]}>{t(`prayer.${row}`)}</Text>
-              <Text style={[styles.body, styles.tabular, { color: isNext ? palette.onAccent : palette.text }]}>{hhmm(times[row])}</Text>
+              <Text style={[styles.body, { color }]}>{t(`prayer.${row}`)}</Text>
+              <Text style={[styles.body, styles.tabular, { color }]}>{hhmm(times[row])}</Text>
             </View>
           );
         })}
@@ -64,15 +85,20 @@ export default function HomeScreen() {
       </View>
 
       <Text style={[styles.body, styles.garden, { color: palette.text }]}>{t('garden.empty')}</Text>
-      <Text style={[styles.caption, { color: palette.textMuted }]}>{t('home.locationPlaceholder', { city: name })}</Text>
-    </SafeAreaView>
+      <Text style={[styles.caption, { color: palette.textMuted }]}>{t('home.timesFor', { city: location.label })}</Text>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: { flex: 1, paddingHorizontal: space.md, paddingTop: space.lg, gap: space.lg },
+  screen: { flex: 1, paddingHorizontal: space.md, gap: space.lg },
+  topBar: { flexDirection: 'row', justifyContent: 'flex-end', paddingTop: space.xs },
+  settingsLink: { minHeight: 44, justifyContent: 'center' },
+  link: { fontSize: fontSize.body, textDecorationLine: 'underline' },
+  card: { borderRadius: radius.md, padding: space.lg, gap: space.sm },
   // alignItems flex-start = the start edge, i.e. right in RTL, whatever the text's own direction
-  card: { borderRadius: radius.md, padding: space.lg, gap: space.xs, alignItems: 'flex-start' },
+  heroCard: { alignItems: 'flex-start', gap: space.xs },
+  title: { fontSize: fontSize.heading, fontWeight: '600' },
   eyebrow: { fontSize: fontSize.small, letterSpacing: 0.5, textTransform: 'uppercase' },
   hero: { fontSize: fontSize.hero, fontWeight: '600' },
   time: { fontSize: fontSize.display, fontVariant: ['tabular-nums'] },

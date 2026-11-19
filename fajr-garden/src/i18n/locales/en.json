@@ -13,12 +13,71 @@
     "inMinutes_other": "in {{count}} minutes",
     "today": "Today",
     "estimated": "Estimated (high latitude)",
-    "locationPlaceholder": "Times for {{city}} · location comes next"
+    "inDuration": "in {{duration}}",
+    "timesFor": "Prayer times for {{city}}",
+    "setLocationTitle": "Where are you?",
+    "setLocationBody": "Prayer times depend on your location.",
+    "openSettings": "Settings"
   },
   "garden": {
     "empty": "Your garden starts with one Fajr.",
     "streak_one": "{{count}} day kept",
     "streak_other": "{{count}} days kept",
     "resting": "Your garden rested today."
+  },
+  "time": {
+    "hours_one": "{{count}} h",
+    "hours_other": "{{count}} h",
+    "minutes_one": "{{count}} min",
+    "minutes_other": "{{count}} min",
+    "hoursAndMinutes": "{{hours}} {{minutes}}"
+  },
+  "settings": {
+    "title": "Settings",
+    "location": "Location",
+    "useMyLocation": "Use my location",
+    "searchCity": "Search for a city",
+    "locating": "Finding your location…",
+    "locationDenied": "Location access is off. You can search for your city instead.",
+    "locationUnavailable": "Couldn't get your location. Try again or search for your city.",
+    "noLocation": "No location set",
+    "privacyNote": "Your location is rounded to about 1 km and stays on this phone.",
+    "method": "Calculation method",
+    "automatic": "Automatic for your country",
+    "asr": "Asr",
+    "asrStandard": "Standard (Shafi'i, Maliki, Hanbali)",
+    "asrHanafi": "Hanafi",
+    "highLat": "High latitudes",
+    "highLatAuto": "Automatic",
+    "highLatMiddle": "Middle of the night",
+    "highLatSeventh": "One seventh of the night",
+    "highLatTwilight": "Twilight angle",
+    "attribution": "City data: GeoNames (CC BY 4.0)",
+    "selected": "Selected"
+  },
+  "methods": {
+    "mwl": "Muslim World League",
+    "isna": "ISNA (North America)",
+    "egyptian": "Egyptian General Authority of Survey",
+    "umm_al_qura": "Umm al-Qura (Makkah)",
+    "karachi": "University of Islamic Sciences, Karachi",
+    "dubai": "Dubai",
+    "qatar": "Qatar",
+    "kuwait": "Kuwait",
+    "singapore": "Singapore (MUIS)",
+    "turkey": "Diyanet (Turkey)",
+    "tehran": "Institute of Geophysics, Tehran",
+    "moonsighting": "Moonsighting Committee",
+    "france_uoif": "France (UOIF, 12°)",
+    "morocco": "Morocco (Ministry of Habous)"
+  },
+  "citySearch": {
+    "title": "Search for a city",
+    "placeholder": "City name",
+    "noResults": "No city found",
+    "hint": "Type at least 2 letters"
+  },
+  "common": {
+    "back": "Back"
   }
 }

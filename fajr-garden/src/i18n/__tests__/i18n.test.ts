@@ -72,6 +72,6 @@ describe('createI18n', () => {
 
   it('does not HTML-escape interpolated values (React escapes on render)', async () => {
     const i18n = await createI18n('en');
-    expect(i18n.t('home.locationPlaceholder', { city: 'Rock & Roll' })).toContain('Rock & Roll');
+    expect(i18n.t('home.timesFor', { city: 'Rock & Roll' })).toContain('Rock & Roll');
   });
 });

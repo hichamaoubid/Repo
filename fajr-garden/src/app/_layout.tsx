@@ -4,6 +4,7 @@ import type { i18n as I18n } from 'i18next';
 import { useEffect, useState } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { View } from 'react-native';
+import { BackButton } from '../components/BackButton';
 import { createI18n, isRTL, resolveLocale } from '../i18n';
 
 export default function RootLayout() {
@@ -21,7 +22,13 @@ export default function RootLayout() {
       {/* Explicit layout direction from the active language: consistent on iOS, Android
           and web, and correct without the app restart that I18nManager.forceRTL needs. */}
       <View style={{ flex: 1, direction: isRTL(i18n.language) ? 'rtl' : 'ltr' }}>
-        <Stack screenOptions={{ headerShown: false }} />
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            headerBackVisible: false,
+            headerLeft: ({ tintColor, canGoBack }) => (canGoBack ? <BackButton tintColor={tintColor} /> : null),
+          }}
+        />
       </View>
     </I18nextProvider>
   );
