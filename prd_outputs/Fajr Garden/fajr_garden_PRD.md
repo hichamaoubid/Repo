@@ -1,7 +1,7 @@
 # Fajr Garden — Product Requirements Document
 
-**Version:** 1.1
-**Date:** 2026-11-18
+**Version:** 1.2
+**Date:** 2026-11-19
 **Author:** PRD Generator
 **Status:** Draft
 **Scope:** MVP (v1.0), iOS and Android simultaneous launch
@@ -10,7 +10,7 @@
 
 ## 1. Executive Summary
 
-Fajr Garden is a family app for iOS and Android that helps Muslims, children aged 6–12 and their parents, build a consistent prayer habit anchored on Fajr. v1 combines three things no competitor offers together: a Fajr alarm that cannot be dismissed without a physical "wake-up mission" verified on-device by the camera, a Salah coach that uses on-device pose detection to teach children the positions of prayer, and accurate prayer times with qibla. Consistency, never worship itself, is rewarded through a private family garden that grows with each day kept. The app is ad-free, sells no data, processes all camera frames on the phone, and earns revenue through a family subscription. The expected outcome for the first 12 months is 250k installs, 35% D30 retention and a 4% install-to-paid conversion.
+Fajr Garden is a family app for iOS and Android that helps Muslims, children aged 6–12 and their parents, build a consistent prayer habit anchored on Fajr. v1 combines three things no competitor offers together: a Fajr alarm that cannot be dismissed without a physical "wake-up mission" verified on-device by the camera, a Salah coach that uses on-device pose detection to teach children the positions of prayer, and accurate prayer times with qibla. Consistency, never worship itself, is rewarded through a private family garden that grows with each day kept. The app is ad-free, sells no data, processes all camera frames on the phone, and earns revenue through a family subscription. The expected outcome for the first 12 months is 250k installs, 20% D30 retention and a 4% install-to-paid conversion.
 
 ---
 
@@ -34,7 +34,9 @@ Fajr Garden is a family app for iOS and Android that helps Muslims, children age
 | Goal | Metric | Target (12 months post-launch) | Measurement Method |
 |------|--------|-------------------------------|--------------------|
 | Help users wake for Fajr | Fajr mission completion rate (missions completed ÷ alarms fired) | ≥ 70% | Client event `alarm_mission_completed` (aggregate, no camera data) |
-| Build a lasting habit | D30 retention | ≥ 35% | First-party analytics |
+| Build a lasting habit | D30 retention | ≥ 20% (category medians: about 3–4% for health apps, 2–8% for education; daily-use prayer utilities do better) | First-party analytics |
+| Habit depth | Fajr check-ins or completed missions per active user per week | ≥ 4 | First-party analytics (aggregate) |
+| Early habit formation | Users still active on day 40 of the starting journey (FR-028) | ≥ 25% of users who start it | First-party analytics |
 | Teach children salah | Children completing the "Full Salah" coach path | ≥ 40% of child profiles active ≥ 14 days | Coach progress table |
 | Sustainable revenue | Install-to-paid conversion | ≥ 4% | RevenueCat |
 | Family adoption | Share of paying accounts on the Family plan | ≥ 55% | RevenueCat entitlements |
@@ -82,7 +84,7 @@ Fajr Garden is a family app for iOS and Android that helps Muslims, children age
 
 ## 6. Functional Requirements
 
-Priority split: P0 = 8 (36%), P1 = 10 (45%), P2 = 4 (18%).
+Priority split, by each requirement's main priority: P0 = 12 (43%), P1 = 14 (50%), P2 = 2 (7%). FR-002, FR-007 and FR-017 also have parts at lower priorities.
 
 ### Onboarding & Accounts
 
@@ -148,6 +150,9 @@ Priority split: P0 = 8 (36%), P1 = 10 (45%), P2 = 4 (18%).
 - [ ] Notifications for the next 7 days are scheduled locally (within the iOS 64-pending-notification limit). The schedule refreshes on each app open and via background refresh.
 - [ ] Optional pre-prayer reminder 5–30 min before.
 - [ ] Notifications never use the alarm channel. Only the Fajr protocol (FR-006) can break through silent mode.
+- [ ] The notification permission is requested in context (when the user sets up the Fajr alarm or turns on a prayer notification), never on first launch.
+- [ ] Apart from prayer-time notifications the user switched on, the app sends at most 1 notification per day, and none between Isha + 30 min and Fajr − 60 min except alarms.
+- [ ] Notification copy rotates (at least 7 variants per type) and never uses guilt or loss wording.
 
 **Priority:** P1
 **Dependencies:** FR-003
@@ -316,7 +321,9 @@ Priority split: P0 = 8 (36%), P1 = 10 (45%), P2 = 4 (18%).
 - [ ] A missed day can be restored within 24 h by a `made_up` check-in (counts as "kept with qada").
 - [ ] Exemption mode (FR-012) and travel mode pause the streak without breaking it.
 - [ ] Streak logic is a pure function `computeStreak(events, settings, tz)` with ≥ 95% branch coverage (§14).
-- [ ] Day boundaries follow the Islamic day for Fajr purposes: the "Fajr day" runs from Isha end (or midnight per setting) to the next Isha, in the user's local timezone. Travel across timezones never double-counts or skips a day.
+- [ ] Day boundaries: the "Fajr day" is the local calendar date in the user's timezone, with local midnight as the boundary (implemented in sprint 1). Travel across timezones never double-counts or skips a day.
+- [ ] The main progress view shows "days kept this month" alongside the streak. Research on habit formation finds a single missed day barely affects automaticity, while repeated misses do (Lally et al., 2010), so the monthly count is the honest measure.
+- [ ] After a missed day, the next app open shows a "welcome back" screen offering qada (if still within 24 h) and today's first step. No loss wording, no broken-chain imagery.
 
 **Priority:** P0
 **Dependencies:** FR-012
@@ -329,7 +336,8 @@ Priority split: P0 = 8 (36%), P1 = 10 (45%), P2 = 4 (18%).
 **Acceptance criteria:**
 - [ ] Shows per child: levels completed, current level, minutes this week, days active, the garden.
 - [ ] Shows a "stuck" hint when a child fails the same level 3 times, with a tip for the parent.
-- [ ] Parent-defined rewards: a parent can attach an offline reward to a milestone ("finish level 6 → choose Saturday's dessert"). The app reminds the parent when it's earned.
+- [ ] Celebrations, not prizes: when a child reaches a milestone, the parent gets a prompt with ideas to celebrate it (praise for the effort, a surprise outing, telling a grandparent). The app never lets a parent set up a reward promised in advance for praying, because rewards promised in advance can undermine a child's own motivation while praise strengthens it (overjustification research, Lepper, Greene and Nisbett, 1973, and later meta-analyses).
+- [ ] All in-app feedback to children praises effort and practice ("You kept practising ruku"), never ability or worthiness.
 - [ ] Accessible only behind the parental gate (FR-019).
 - [ ] Loads in ≤ 1.5 s on 4G with cached data shown instantly.
 
@@ -348,6 +356,96 @@ Priority split: P0 = 8 (36%), P1 = 10 (45%), P2 = 4 (18%).
 
 **Priority:** P2
 **Dependencies:** FR-003, FR-012
+
+#### FR-023: If-then plan and small first goal at onboarding
+**Description:** Onboarding asks the user to tie each habit to a concrete cue, preferably a prayer, and to choose a deliberately small first goal.
+
+**User story:** As Omar, I want to decide exactly what I do when the alarm rings, so that I don't have to think at 5 a.m.
+
+**Acceptance criteria:**
+- [ ] Each habit is set up as an if-then plan built from choices, e.g. "When my Fajr alarm rings, I go to the sink for wudu" or "After Fajr, I read 1 page". Implementation intentions improve goal attainment (meta-analytic d = 0.65 in 2006; 0.15–0.35 after publication-bias correction in the 2024 update), so the effect is real but modest.
+- [ ] Prayer-anchored cues are offered first (after Fajr, after Maghrib, after Isha), then time and place cues.
+- [ ] The first goal suggested is the smallest meaningful version (1 page, 1 ayah, 2 rak'ahs). The user can raise it any time, and the app suggests raising it only after 14 kept days.
+- [ ] The daily goal is separate from the streak: meeting the small goal keeps the day, going further is never required.
+- [ ] The plan is shown back in the user's words on the mission screen after the alarm.
+- [ ] Onboarding with the plan step still completes in ≤ 3 minutes (FR-001).
+
+**Priority:** P0
+**Dependencies:** FR-001, FR-006
+
+#### FR-024: Fresh starts on the Islamic calendar
+**Description:** On meaningful dates, the app offers a light "begin again" moment.
+
+**User story:** As someone who drifted off for two weeks, I want a natural moment to restart without feeling I failed.
+
+**Acceptance criteria:**
+- [ ] Fresh-start dates: every Friday, the 1st of each Hijri month, the first 10 days of Dhul Hijjah, 1 Ramadan, 1 Shawwal, the user's birthday (optional), and the first day after a pause ends. People are more likely to start working on goals at such landmarks (Dai, Milkman and Riis, 2014).
+- [ ] On those dates, a lapsed user (no check-in in the last 7 days) sees one gentle card offering to restart with a small goal. Active users see nothing extra.
+- [ ] At most one fresh-start card per week, and it can be turned off.
+- [ ] The Hijri dates come from the same Umm al-Qura calendar as FR-022, with the household's ±1 day adjustment.
+
+**Priority:** P1
+**Dependencies:** FR-014, FR-023
+
+#### FR-025: Prayer Focus mode (khushoo)
+**Description:** Help the user pray with presence, not only on time: a short transition before prayer, silence during it, and one meaning card a day.
+
+**User story:** As Amina, I want my phone to stay quiet while I pray and to help me understand what I recite, so that my prayer feels present and not mechanical.
+
+**Acceptance criteria:**
+- [ ] Optional per prayer. When it's on, the phone's Focus / Do Not Disturb mode turns on for a user-set window (default 15 min from the prayer card's "Start prayer" tap). iOS: a Focus filter set up through App Intents. Android: Do Not Disturb with the notification-policy permission.
+- [ ] A 60-second transition screen before prayer: a reminder to make wudu, put the phone away and set the intention, with no animation if Reduce Motion is on.
+- [ ] One "meaning card" per day: a phrase of al-Fatiha or another short surah with translation and a one-line reflection, in a fixed sequence the user can follow. Content goes through the advisory board (FR-020).
+- [ ] Research on prayer reminder apps found better punctuality but little gain in khushoo, and a 2025 review of Islamic apps found they rarely support long-term motivation, so this feature is a deliberate differentiator. Success is measured by an optional monthly self-rating ("My prayers felt present: rarely / sometimes / often"), stored on device only.
+- [ ] The app records nothing about the prayer itself.
+
+**Priority:** P1
+**Dependencies:** FR-003, FR-020
+
+#### FR-026: Bedtime coach worked out from Fajr
+**Description:** A wind-down reminder computed backwards from tomorrow's alarm, so the user wakes for Fajr with enough sleep.
+
+**User story:** As Omar, I want to know when to go to bed tonight so that waking for Fajr doesn't leave me exhausted.
+
+**Acceptance criteria:**
+- [ ] Bedtime = tomorrow's alarm time − the user's sleep target (default 7 h, range 5–9 h) − 15 min to fall asleep. A reminder fires 30 min before it.
+- [ ] Because Fajr moves by hours across the year at high latitudes, the coach shows a weekly preview of alarm and bedtime so the user can keep a regular schedule. Regular sleep and wake timing is associated with better health than duration alone.
+- [ ] During Ramadan, the coach shows a daily sleep budget including suhoor and suggests a short midday rest when the night's sleep falls under the target. The religious framing of the midday rest is subject to board approval.
+- [ ] Snooze stays off by default (FR-008): a sleep-lab study found snoozing prolongs grogginess after waking.
+- [ ] The coach gives guidance only: no sleep tracking and no microphone use.
+
+**Priority:** P1
+**Dependencies:** FR-003, FR-006
+
+#### FR-027: 7-day Fajr commitment
+**Description:** The user can commit to waking for Fajr for the next 7 days. Keeping it grows a rare plant.
+
+**User story:** As Omar, I want a short, concrete challenge to get started, because "every day forever" feels too big.
+
+**Acceptance criteria:**
+- [ ] One tap to commit for the next 7 days, with an optional wake-up partner told about it (FR-008).
+- [ ] Completing 7 kept days (freezes and qada count as kept) grows a rare plant in the garden. Missing it simply ends the challenge with an offer to start a new one. Nothing is taken away.
+- [ ] No money, sadaqah pledges or vows are involved. Paid commitment contracts work in secular apps, but betting raises maysir concerns and conditional vows (nadhr) were discouraged by the Prophet ﷺ. The board must confirm this wording.
+- [ ] A user can run at most one commitment at a time.
+- [ ] Evidence: Duolingo reports that asking learners to commit to a streak goal improved short-term retention (company-reported, not peer-reviewed).
+
+**Priority:** P1
+**Dependencies:** FR-007, FR-013, FR-014
+
+#### FR-028: 40-day starting journey
+**Description:** New users follow a guided 40-day journey: close daily support for the first two weeks, then gradually lighter support.
+
+**User story:** As a new user, I want to be guided through the hardest early weeks, so that the habit sticks before I'm left on my own.
+
+**Acceptance criteria:**
+- [ ] Days 1–14: a short daily step (one tip, one evidence card or one small win), the welcome-back flow (FR-014) after any miss, and a check-in prompt after Fajr. Early repetitions bring the largest gains in automaticity (Lally et al., 2010).
+- [ ] Days 15–40: a step every 3 days, then weekly. Prompts stop entirely at day 40.
+- [ ] Day 40 shows a garden milestone and asks the user to choose their next small goal (FR-023).
+- [ ] Any reference to 40 days in Islamic tradition is shown only if the advisory board approves a specific, authentic source. Otherwise the journey is presented as habit science only.
+- [ ] Days kept, not consecutive days, decide progress through the journey.
+
+**Priority:** P1
+**Dependencies:** FR-013, FR-014, FR-023
 
 ### Monetization & Trust
 
@@ -1145,3 +1243,27 @@ Precise coordinates are **not** stored server-side. Only a city id is stored, if
 4. Does the tarteel-ai Whisper checkpoint's license allow commercial on-device use (needed for FR-021)?
 5. Should wake-up partners be possible between a parent and a teenage child (13+) in the same household?
 6. Before Ramadan 1448, the advisory board must verify every reference in the FR-022 evidence table word for word, and approve the wording on qiyam rak'ah counts. Can that review be completed by mid-January 2027?
+7. The board must also rule on three framings added in v1.2: an authentic source (if any) for presenting 40 days as meaningful (FR-028), the wording explaining why no vows or pledges are used (FR-027), and the midday rest suggestion in Ramadan (FR-026).
+
+---
+
+## 17. Research Basis (added in v1.2)
+
+The behavior-design choices above rest on the following findings. Evidence strength varies, as noted.
+
+| Finding | Source | Strength | Used in |
+|---------|--------|----------|---------|
+| Automaticity took 66 days on average (range 18–254). Early repetitions gave the largest gains. One missed day had little effect, repeated misses lowered the ceiling | Lally et al., 2010, *European Journal of Social Psychology* | Peer-reviewed, 96 participants, self-reported automaticity | FR-014, FR-028 |
+| People are more likely to start goals at temporal landmarks | Dai, Milkman and Riis, 2014, *Management Science* | Peer-reviewed | FR-024 |
+| If-then plans improve goal attainment: d = 0.65 (2006), 0.15–0.35 after bias correction (2024) | Gollwitzer and Sheeran 2006; Sheeran, Listrom and Gollwitzer 2024 | Meta-analyses | FR-023 |
+| Lapses can trigger giving up entirely (abstinence violation effect) | Polivy and Herman 1985; Curry, Marlatt and Gordon 1987 | Peer-reviewed, diet and addiction context | FR-014 |
+| Islamic apps support short-term tracking but rarely long-term motivation; gratitude and reflection recommended | *International Journal of Human–Computer Interaction*, 2025 | Peer-reviewed, small qualitative sample | FR-025, design principles |
+| Prayer reminders improved punctuality but barely improved khushoo | Survey of 34 Muslim university students | Small survey | FR-025 |
+| Snooze alarms prolong sleep inertia | *Journal of Physiological Anthropology*, 2022 | Peer-reviewed, small samples | FR-008, FR-026 |
+| Sleep regularity predicts health outcomes beyond duration | Large wearable cohort (about 61,000 people), reported secondhand | To verify against the original paper | FR-026 |
+| Ramadan delays bedtime and shortens total sleep | Saudi polysomnography study, 2013; later meta-analysis | Peer-reviewed | FR-026 |
+| Rewards promised in advance can undermine children's intrinsic motivation; verbal praise increases it | Lepper, Greene and Nisbett, 1973; later meta-analyses | Peer-reviewed, debated scope | FR-010, FR-015 |
+| Writing goals and reporting progress to a friend gave the highest self-rated progress | Matthews, Dominican University | Self-rated, not peer-reviewed | FR-008, FR-027 |
+| Separating the daily goal from the streak raised D14 retention by 3.3%; a streak commitment raised D7 retention | Duolingo product blog | Company-reported A/B tests | FR-023, FR-027 |
+| D30 retention medians: about 3–4% (health), 2–8% (education); push opt-in about 49% iOS, 53% Android | Braze, UXCam, Airship industry reports | Vendor data | §3, FR-004 |
+
