@@ -108,8 +108,8 @@ describe('coarsenCoords', () => {
 });
 
 describe('defaults', () => {
-  it('ship with the Fajr alarm off, at Fajr, Steps mission, no snooze, every day', () => {
-    expect(DEFAULT_SETTINGS.alarm).toMatchObject({ enabled: false, mode: 'at_fajr', mission: 'steps', snoozeMax: 0, enabledDays: 0b1111111 });
+  it('ship with the Fajr alarm off, at Fajr, Math mission (always available), no snooze, every day', () => {
+    expect(DEFAULT_SETTINGS.alarm).toMatchObject({ enabled: false, mode: 'at_fajr', mission: 'math', snoozeMax: 0, enabledDays: 0b1111111 });
     expect(DEFAULT_SETTINGS.location).toBeNull();
   });
 });

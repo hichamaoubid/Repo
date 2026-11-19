@@ -37,7 +37,7 @@ export const DEFAULT_SETTINGS: AppSettings = {
     enabled: false,
     mode: 'at_fajr',
     offsetMin: 0,
-    mission: 'steps',
+    mission: 'math',
     snoozeMax: 0,
     snoozeMin: 5,
     enabledDays: 0b1111111,

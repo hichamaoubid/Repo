@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Button } from '../components/Button';
 import { ChoiceRow } from '../components/ChoiceRow';
+import { AlarmSettings } from '../features/alarm/AlarmSettings';
 import { NO_LOCATION_PALETTE, usePrayerDay } from '../features/home/usePrayerDay';
 import { useNow } from '../features/home/useNow';
 import { useLocate } from '../features/location/useLocate';
@@ -72,6 +73,8 @@ export default function SettingsScreen() {
             </Text>
           )}
         </View>
+
+        <AlarmSettings settings={settings} palette={palette} />
 
         <View style={styles.section} role="radiogroup">
           <Text accessibilityRole="header" style={[styles.sectionTitle, text]}>{t('settings.method')}</Text>

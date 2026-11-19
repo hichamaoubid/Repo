@@ -79,5 +79,36 @@
   },
   "common": {
     "back": "Back"
+  },
+  "alarm": {
+    "title": "Fajr alarm",
+    "enable": "Wake me for Fajr",
+    "unsupported": "The Fajr alarm works in the phone app (Android, or iPhone with iOS 26 or later).",
+    "needsLocation": "Set your location first.",
+    "atFajr": "At Fajr",
+    "before10": "10 minutes before Fajr",
+    "before20": "20 minutes before Fajr",
+    "before30": "30 minutes before Fajr",
+    "missionMath": "To stop it, you solve 3 short sums. If you stop it without the mission, it rings again every 2 minutes.",
+    "next": "Next alarm: {{when}}",
+    "cannotSchedule": "This phone does not allow exact alarms for the app.",
+    "allowNotifications": "Allow notifications",
+    "fullScreenOff": "The alarm screen cannot appear over the lock screen.",
+    "allowFullScreen": "Allow the alarm screen",
+    "test": "Test the alarm (rings in {{seconds}} s)",
+    "testScheduled": "The alarm will ring in {{seconds}} seconds. Lock your phone to try it.",
+    "notificationTitle": "Fajr",
+    "notificationBody": "Complete your mission to stop the alarm"
+  },
+  "mission": {
+    "progress": "Sum {{current}} of {{total}}",
+    "mathTitle": "Solve this to stop the alarm",
+    "answer": "Your answer",
+    "check": "Check",
+    "tryAgain": "Not quite. Try again.",
+    "times": "times",
+    "doneTitle": "Alarm stopped",
+    "doneBody": "Time for Fajr.",
+    "backHome": "Back to home"
   }
 }

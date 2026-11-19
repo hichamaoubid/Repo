@@ -1,0 +1,9 @@
+{
+  "platforms": ["android", "apple", "web"],
+  "apple": {
+    "modules": ["FgAlarmModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.fgalarm.FgAlarmModule"]
+  }
+}

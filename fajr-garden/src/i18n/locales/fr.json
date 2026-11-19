@@ -83,5 +83,36 @@
   },
   "common": {
     "back": "Retour"
+  },
+  "alarm": {
+    "title": "Réveil du Fajr",
+    "enable": "Me réveiller pour le Fajr",
+    "unsupported": "Le réveil du Fajr fonctionne dans l'application mobile (Android, ou iPhone avec iOS 26 ou plus récent).",
+    "needsLocation": "Choisis d'abord ta position.",
+    "atFajr": "Au Fajr",
+    "before10": "10 minutes avant le Fajr",
+    "before20": "20 minutes avant le Fajr",
+    "before30": "30 minutes avant le Fajr",
+    "missionMath": "Pour l'arrêter, tu résous 3 petites additions. Si tu l'arrêtes sans la mission, il sonne à nouveau toutes les 2 minutes.",
+    "next": "Prochain réveil : {{when}}",
+    "cannotSchedule": "Ce téléphone n'autorise pas les alarmes exactes pour l'application.",
+    "allowNotifications": "Autoriser les notifications",
+    "fullScreenOff": "L'écran du réveil ne peut pas s'afficher sur l'écran verrouillé.",
+    "allowFullScreen": "Autoriser l'écran du réveil",
+    "test": "Tester le réveil (sonne dans {{seconds}} s)",
+    "testScheduled": "Le réveil sonnera dans {{seconds}} secondes. Verrouille ton téléphone pour essayer.",
+    "notificationTitle": "Fajr",
+    "notificationBody": "Termine ta mission pour arrêter le réveil"
+  },
+  "mission": {
+    "progress": "Calcul {{current}} sur {{total}}",
+    "mathTitle": "Résous ce calcul pour arrêter le réveil",
+    "answer": "Ta réponse",
+    "check": "Vérifier",
+    "tryAgain": "Pas tout à fait. Réessaie.",
+    "times": "fois",
+    "doneTitle": "Réveil arrêté",
+    "doneBody": "C'est l'heure du Fajr.",
+    "backHome": "Retour à l'accueil"
   }
 }
