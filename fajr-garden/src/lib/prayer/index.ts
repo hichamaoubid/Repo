@@ -64,6 +64,18 @@ export interface DayTimes extends Record<TimeName, Date> {
   estimated: boolean;
 }
 
+export interface ComputeOptions {
+  /**
+   * True during Ramadan. Umm al-Qura then sets Isha at 120 min after Maghrib instead
+   * of 90. Deciding whether today is in Ramadan (official announcement or calendar)
+   * is the caller's job.
+   */
+  ramadan?: boolean;
+}
+
+/** Umm al-Qura's Isha interval in Ramadan, in minutes. */
+export const UMM_AL_QURA_RAMADAN_ISHA_INTERVAL = 120;
+
 export const defaultSettings: PrayerSettings = {
   method: 'mwl',
   asrMadhab: 'standard',
@@ -270,12 +282,20 @@ function preciseAsr(coords: Coords, date: LocalDate, settings: PrayerSettings, p
   return roundToMinute(new Date(at.getTime() + adjust * MS_PER_MIN), params.rounding);
 }
 
-export function computePrayerTimes(coords: Coords, date: LocalDate, settings: PrayerSettings): DayTimes {
+export function computePrayerTimes(
+  coords: Coords,
+  date: LocalDate,
+  settings: PrayerSettings,
+  options: ComputeOptions = {},
+): DayTimes {
   assertCoords(coords);
   assertOffsets(settings.offsetsMin);
 
   const rule = resolveRule(settings.highLatRule, coords.latitude);
   const params = buildParams(settings, rule);
+  if (options.ramadan && settings.method === 'umm_al_qura') {
+    params.ishaInterval = UMM_AL_QURA_RAMADAN_ISHA_INTERVAL;
+  }
   const t = run(coords, date, params);
 
   // With AqrabBalad, adhan moves polar-circle dates to a nearer latitude. Detect it by
@@ -325,10 +345,16 @@ export interface NextPrayer {
   time: Date;
 }
 
-export function nextPrayer(now: Date, coords: Coords, settings: PrayerSettings, timeZone: string): NextPrayer {
+export function nextPrayer(
+  now: Date,
+  coords: Coords,
+  settings: PrayerSettings,
+  timeZone: string,
+  options: ComputeOptions = {},
+): NextPrayer {
   const today = localDateIn(now, timeZone);
   for (const date of [today, addDays(today, 1)]) {
-    const times = computePrayerTimes(coords, date, settings);
+    const times = computePrayerTimes(coords, date, settings, options);
     const next = PRAYER_ORDER.find((p) => times[p].getTime() > now.getTime());
     if (next) return { name: next, time: times[next] };
   }

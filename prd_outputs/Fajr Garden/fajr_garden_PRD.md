@@ -1,6 +1,6 @@
 # Fajr Garden — Product Requirements Document
 
-**Version:** 1.2
+**Version:** 1.3
 **Date:** 2026-11-19
 **Author:** PRD Generator
 **Status:** Draft
@@ -410,7 +410,7 @@ Priority split, by each requirement's main priority: P0 = 12 (43%), P1 = 14 (50%
 **Acceptance criteria:**
 - [ ] Bedtime = tomorrow's alarm time − the user's sleep target (default 7 h, range 5–9 h) − 15 min to fall asleep. A reminder fires 30 min before it.
 - [ ] Because Fajr moves by hours across the year at high latitudes, the coach shows a weekly preview of alarm and bedtime so the user can keep a regular schedule. Regular sleep and wake timing is associated with better health than duration alone.
-- [ ] During Ramadan, the coach shows a daily sleep budget including suhoor and suggests a short midday rest when the night's sleep falls under the target. The religious framing of the midday rest is subject to board approval.
+- [ ] During Ramadan, the coach shows a daily sleep budget including suhoor and suggests a short midday rest when the night's sleep falls under the target. The suggestion is framed as health advice only: the commonly quoted midday-nap hadith could not be verified during research (§18), so no hadith is cited unless the board approves one.
 - [ ] Snooze stays off by default (FR-008): a sleep-lab study found snoozing prolongs grogginess after waking.
 - [ ] The coach gives guidance only: no sleep tracking and no microphone use.
 
@@ -425,7 +425,7 @@ Priority split, by each requirement's main priority: P0 = 12 (43%), P1 = 14 (50%
 **Acceptance criteria:**
 - [ ] One tap to commit for the next 7 days, with an optional wake-up partner told about it (FR-008).
 - [ ] Completing 7 kept days (freezes and qada count as kept) grows a rare plant in the garden. Missing it simply ends the challenge with an offer to start a new one. Nothing is taken away.
-- [ ] No money, sadaqah pledges or vows are involved. Paid commitment contracts work in secular apps, but betting raises maysir concerns and conditional vows (nadhr) were discouraged by the Prophet ﷺ. The board must confirm this wording.
+- [ ] No money, sadaqah pledges or vows are involved. Paid commitment contracts work in secular apps, but betting raises maysir concerns, and the Prophet ﷺ forbade making vows, saying a vow "brings no good; it is only a means of extracting something from the miser" (Muslim 1639, Bukhari 6608, reference checked). The board approves the final wording.
 - [ ] A user can run at most one commitment at a time.
 - [ ] Evidence: Duolingo reports that asking learners to commit to a streak goal improved short-term retention (company-reported, not peer-reviewed).
 
@@ -441,7 +441,7 @@ Priority split, by each requirement's main priority: P0 = 12 (43%), P1 = 14 (50%
 - [ ] Days 1–14: a short daily step (one tip, one evidence card or one small win), the welcome-back flow (FR-014) after any miss, and a check-in prompt after Fajr. Early repetitions bring the largest gains in automaticity (Lally et al., 2010).
 - [ ] Days 15–40: a step every 3 days, then weekly. Prompts stop entirely at day 40.
 - [ ] Day 40 shows a garden milestone and asks the user to choose their next small goal (FR-023).
-- [ ] Any reference to 40 days in Islamic tradition is shown only if the advisory board approves a specific, authentic source. Otherwise the journey is presented as habit science only.
+- [ ] The journey is presented as habit science only. The best-known 40-day narration (praying 40 days in congregation catching the first takbir, Tirmidhi 241) has a disputed grading: rated hasan in some of al-Albani's works and by Ahmad Shakir, weak by others, and Tirmidhi himself notes it is mostly reported as a statement of Anas. It is not cited unless the board decides otherwise (§18).
 - [ ] Days kept, not consecutive days, decide progress through the journey.
 
 **Priority:** P1
@@ -538,12 +538,13 @@ Priority split, by each requirement's main priority: P0 = 12 (43%), P1 = 14 (50%
 | 9 | Last ten nights: revive them, wake the family | "When the last ten began, he tightened his waist-wrapper, prayed all night, and woke his family." He strove in the last ten more than at any other time | Bukhari 2024, Muslim 1174; Muslim 1175 | 2024/1174 checked |
 | 10 | Seek Laylat al-Qadr | Seek it in the odd nights of the last ten. The dua he taught Aisha: "Allahumma innaka 'afuwwun tuhibbul-'afwa fa'fu 'anni" | Bukhari 2017; Tirmidhi 3513 | To verify |
 | 11 | I'tikaf (optional) | He did i'tikaf in the last ten nights until he passed away | Bukhari 2026, Muslim 1172 | To verify |
-| 12 | Zakat al-Fitr | To be given before the people go out to the Eid prayer | Bukhari 1503, Muslim 984 | To verify |
+| 12 | Zakat al-Fitr | To be given before the people go out to the Eid prayer. Form of payment follows the household's country: Morocco's Higher Council of Ulema allows food or cash (25 MAD per person in 2026); Egypt's Dar al-Ifta allows cash (EGP 35 minimum in 2026); the Saudi position associated with Ibn Baz requires food | Bukhari 1503, Muslim 984 | To verify |
 | 13 | Six days of Shawwal (after Ramadan) | "Whoever fasts Ramadan and follows it with six of Shawwal, it is as if he fasted for a lifetime" | Muslim 1164 | To verify |
 | — | Principle behind the whole program | "The most beloved deeds to Allah are the most consistent, even if small" | Bukhari 6464, Muslim 783 | To verify |
 
 **Acceptance criteria:**
-- [ ] **Ramadan detection:** starts automatically on 1 Ramadan computed with the Umm al-Qura calendar, with a ±1 day manual adjustment per household for local moon sighting. A preview "Get ready" screen opens 7 days before.
+- [ ] **Ramadan detection:** Ramadan starts on the date officially announced in the household's country, not on a calendar calculation. Saudi Arabia and Egypt announce it from crescent sightings, and Morocco runs its own national sighting and often starts one day after them (2021, 2024 and 2025). The app predicts the date from the Umm al-Qura calendar, shows it as "expected", asks the user to confirm on the evening of the sighting ("Has Ramadan been announced where you live?"), and the team can push the official dates per country through remote configuration. A ±1 day manual adjustment stays available. A preview "Get ready" screen opens 7 days before.
+- [ ] **Isha in Ramadan:** under the Umm al-Qura method, Isha is 120 min after Maghrib during Ramadan instead of 90 (implemented and tested: `computePrayerTimes(..., { ramadan: true })`).
 - [ ] **Day timeline:** the habits appear in the order of the user's actual day, driven by FR-003 prayer times: suhoor → Fajr → daily Quran → iftar → Isha + qiyam → (last ten) tahajjud.
 - [ ] **Suhoor alarm:** a preset on the FR-006 engine at Fajr − N minutes (default 20, range 10–60), explained with the "50 verses" evidence card.
 - [ ] **Tahajjud alarm:** a preset at the start of the last third of the night, computed as Fajr − (Fajr − Maghrib) / 3 for the user's location (pure function in `lib/prayer`, unit-tested including high latitudes). It uses the same missions as the Fajr alarm (FR-007), Stand & Perform by default.
@@ -787,6 +788,7 @@ All endpoints are Supabase Edge Functions under `https://<project>.supabase.co/f
 - **Geometry as structure:** layout spacing derives from an 8-fold star construction (base unit 8 pt, scale 8/12/16/24/32/48). Geometric patterns appear only as functional elements (progress rings drawn as girih segments, section dividers), never as wallpaper.
 - **Typography:** Quran text in KFGQPC Uthmanic Script Hafs (licensed from the King Fahd Complex, with attribution). Arabic UI in IBM Plex Sans Arabic. Latin UI in a grotesk with real character (e.g. Inter Display is too common: prefer "Söhne", "Geist" or "Satoshi" depending on licensing). Type scale 12/14/16/20/24/32/40.
 - **Illustration:** a commissioned human illustrator for plants, garden and coach figures. Coach figures are faceless silhouettes with simple, modest clothing. AI-generated images are banned in assets.
+- **Abstract figure mode:** a household setting replaces the coach silhouettes with an abstract pose diagram (joints and lines only, no human form). Egypt's Dar al-Ifta allows two-dimensional drawings for teaching children, while the stricter view associated with Saudi scholars holds that even faceless drawings of living beings are prohibited. Families following the stricter view must be able to use the coach (§18).
 - **Motion and haptics:** physics-based springs, 150–300 ms. Every meaningful action has a distinct haptic (check-in = soft, level complete = success pattern, alarm mission pass = rising triple).
 - **Icons:** custom 1.5 pt stroke icon set. Emoji are banned as UI icons.
 - **Copy tone:** warm, direct, never guilt-tripping ("Your garden rested today" rather than "You broke your streak!").
@@ -1237,7 +1239,7 @@ Precise coordinates are **not** stored server-side. Only a city id is stored, if
 - "Fajr Garden" is a working title, pending trademark search and domain availability.
 
 **Open questions:**
-1. Who sits on the scholarly advisory board, and which madhab variants are covered at launch?
+1. Who sits on the scholarly advisory board, and which madhab variants are covered at launch? Proposal (§18): at least one scholar trained in each of the three main reference traditions of the launch markets: Maliki (Morocco), Azhari, Shafi'i or Hanafi (Egypt), Hanbali (Saudi Arabia).
 2. Which reciter and adhan recordings will be licensed?
 3. Is the follow-up alarm chain on iOS acceptable to App Review? Validate early with a TestFlight build.
 4. Does the tarteel-ai Whisper checkpoint's license allow commercial on-device use (needed for FR-021)?
@@ -1266,4 +1268,24 @@ The behavior-design choices above rest on the following findings. Evidence stren
 | Writing goals and reporting progress to a friend gave the highest self-rated progress | Matthews, Dominican University | Self-rated, not peer-reviewed | FR-008, FR-027 |
 | Separating the daily goal from the streak raised D14 retention by 3.3%; a streak commitment raised D7 retention | Duolingo product blog | Company-reported A/B tests | FR-023, FR-027 |
 | D30 retention medians: about 3–4% (health), 2–8% (education); push opt-in about 49% iOS, 53% Android | Braze, UXCam, Airship industry reports | Vendor data | §3, FR-004 |
+
+---
+
+## 18. Country Positions: Morocco, Saudi Arabia, Egypt (added in v1.3)
+
+Research into the official bodies of the three reference countries, on every religious question the product touches. "Primary" means an official body's own publication; "secondary" means a news report or reposting; the board must confirm everything before release.
+
+| Topic | Morocco | Saudi Arabia | Egypt | Product decision |
+|-------|---------|--------------|-------|------------------|
+| Prayer time angles | Ministry of Habous: Fajr 19°, Isha 17°, plus 5 min on Dhuhr and Maghrib (angles in technical references; the minute adjustments only in secondary sources, official timetable not reachable) | Umm al-Qura: Fajr 18.5°, Isha 90 min after Maghrib, 120 min in Ramadan (secondary sources consistent) | Egyptian General Authority for Survey: Fajr 19.5°, Isha 17.5°. Dar al-Ifta publicly defends 19.5° against claims that Fajr is announced too early (primary) | Default method per country (implemented). Keep the ±30 min per-prayer offset for users who follow a different local timetable. Verify Morocco's minute adjustments against the official Habous timetable before launch |
+| Start of Ramadan | Own national crescent sighting; often one day after Saudi Arabia and Egypt | Crescent sighting announced officially; Umm al-Qura calendar is a civil calendar, not the Ramadan decision | Dar al-Ifta announces from sighting supported by astronomical calculation | FR-022: official announcement per country, prediction shown as "expected", user confirmation and remote dates |
+| Number of taraweeh rak'ahs | No primary source found | Permanent Committee: the Prophet ﷺ usually prayed 11, there is no fixed number and praying more is fine (secondary report of the fatwa) | Dar al-Ifta: 20 rak'ahs plus witr; Ministry of Awqaf (2025): 20 in major mosques, 8 in others (primary and news) | No rak'ah count is tracked or suggested (already in FR-022). The evidence card presents 11 as the Prophet's ﷺ usual practice and 20 as the practice established under 'Umar, without preferring either |
+| Zakat al-Fitr payment | Higher Council of Ulema: food or cash, 25 MAD per person for 1447 / 2026 (news reports of the council's statement) | Food, per the view associated with Ibn Baz (secondary; Permanent Committee text not found) | Dar al-Ifta: cash allowed; EGP 35 minimum per person for 2026 (primary) | Zakat reminder shows the official amount and form for the household's country; the amount is configured remotely each year |
+| Drawings of people for children | No primary source found | Stricter view: drawings of living beings prohibited, faceless ones included, with an exception for children's toys (secondary) | Dar al-Ifta: two-dimensional drawings allowed for teaching children (primary) | Abstract figure mode (§10) |
+| Counting worship with an app | — | Scholars differ on counting devices for dhikr; principle that acts of worship follow what is prescribed (secondary, IslamQA) | — | The app never counts or scores worship (already a product principle); only private check-ins of consistency |
+| Vows (nadhr) as commitment devices | Sunni consensus text: "it brings no good; it only extracts from the miser" (Muslim 1639, Bukhari 6608, checked) | same | same | FR-027 uses no vows or pledges |
+| 40-day framing | Tirmidhi 241: grading disputed | same | same | FR-028 presented as habit science only |
+| Midday nap hadith | Not verified | — | — | FR-026: health framing only |
+
+**Proposed advisory board:** one scholar from each tradition above, ideally with links to Morocco's Higher Council of Ulema or the Rabita Mohammadia des Oulémas, to Al-Azhar or Dar al-Ifta in Egypt, and to a Saudi university faculty of Sharia. The board signs off on the evidence cards, the zakat guidance, the taraweeh wording and the abstract figure mode.
 

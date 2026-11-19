@@ -43,7 +43,23 @@ describe('computePrayerTimes — cross-check against AlAdhan reference fixture',
 
   const cases = reference.cases.filter((c) => !isRamadanUmmAlQura(c));
 
-  it.todo('Umm al-Qura: Isha is 120 min after Maghrib during Ramadan (FR-022)');
+  it('Umm al-Qura: Isha is 120 min after Maghrib during Ramadan (FR-022)', () => {
+    const c = reference.cases.find(isRamadanUmmAlQura)!;
+    const times = computePrayerTimes({ latitude: c.lat, longitude: c.lng }, { year: 2026, month: 3, day: 8 }, settingsFor('umm_al_qura'), { ramadan: true });
+    expect(diffMinutes(localHHMM(times.isha, c.tz), c.times.isha)).toBeLessThanOrEqual(1);
+    expect(times.isha.getTime() - times.maghrib.getTime()).toBe(120 * 60_000);
+  });
+
+  it('the Ramadan flag only changes Umm al-Qura Isha', () => {
+    const date = { year: 2026, month: 3, day: 8 };
+    const cairo = { latitude: 30.0444, longitude: 31.2357 };
+    const normal = computePrayerTimes(cairo, date, settingsFor('egyptian'));
+    const ramadan = computePrayerTimes(cairo, date, settingsFor('egyptian'), { ramadan: true });
+    expect(ramadan.isha.getTime()).toBe(normal.isha.getTime());
+    const mecca = { latitude: 21.4225, longitude: 39.8262 };
+    const outside = computePrayerTimes(mecca, date, settingsFor('umm_al_qura'));
+    expect(outside.isha.getTime() - outside.maghrib.getTime()).toBe(90 * 60_000);
+  });
 
   it.each(cases.map((c) => [`${c.city} ${c.date} (${c.method})`, c] as const))(
     '%s is within 2 minutes for every prayer',
@@ -179,6 +195,16 @@ describe('nextPrayer', () => {
     const n = nextPrayer(now, paris, settingsFor('france_uoif'), tz);
     expect(n.name).toBe('fajr');
     expect(formatInTimeZone(n.time, tz, 'yyyy-MM-dd')).toBe('2026-05-11');
+  });
+
+  it('passes the Ramadan option through, so Umm al-Qura Isha is not announced early', () => {
+    const mecca = { latitude: 21.4225, longitude: 39.8262 };
+    const t = computePrayerTimes(mecca, { year: 2026, month: 3, day: 8 }, settingsFor('umm_al_qura'));
+    const now = new Date(t.maghrib.getTime() + 100 * 60_000); // after the normal 90 min, before 120
+    expect(nextPrayer(now, mecca, settingsFor('umm_al_qura'), 'Asia/Riyadh').name).toBe('fajr');
+    const n = nextPrayer(now, mecca, settingsFor('umm_al_qura'), 'Asia/Riyadh', { ramadan: true });
+    expect(n.name).toBe('isha');
+    expect(n.time.getTime() - t.maghrib.getTime()).toBe(120 * 60_000);
   });
 
   it('uses the local date of the given timezone, not the machine timezone', () => {
