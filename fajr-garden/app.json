@@ -44,6 +44,12 @@
           "isIosBackgroundLocationEnabled": false,
           "isAndroidBackgroundLocationEnabled": false
         }
+      ],
+      [
+        "expo-sensors",
+        {
+          "motionPermission": "Fajr Garden counts your steps only during the Steps wake-up mission, to check that you are up. Nothing is stored or shared."
+        }
       ]
     ],
     "scheme": "fajrgarden",

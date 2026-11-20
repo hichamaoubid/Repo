@@ -92,7 +92,12 @@ export function AlarmSettings({ settings, palette }: { settings: AppSettings; pa
                   <ChoiceRow key={key} label={t(key)} selected={isSelected(patch)} onPress={() => setAlarm(patch)} palette={palette} selectedLabel={selectedLabel} />
                 ))}
               </View>
-              <Text style={[styles.caption, muted]}>{t('alarm.missionMath')}</Text>
+              <Text style={[styles.label, text]}>{t('alarm.mission')}</Text>
+              <View role="radiogroup" style={styles.group}>
+                <ChoiceRow label={t('alarm.missionMathLabel')} selected={alarm.mission !== 'steps'} onPress={() => setAlarm({ mission: 'math' })} palette={palette} selectedLabel={selectedLabel} />
+                <ChoiceRow label={t('alarm.missionStepsLabel')} selected={alarm.mission === 'steps'} onPress={() => setAlarm({ mission: 'steps' })} palette={palette} selectedLabel={selectedLabel} />
+              </View>
+              <Text style={[styles.caption, muted]}>{t(alarm.mission === 'steps' ? 'alarm.missionSteps' : 'alarm.missionMath')}</Text>
               {nextLabel && <Text style={[styles.body, text]}>{t('alarm.next', { when: nextLabel })}</Text>}
             </>
           )}
@@ -127,5 +132,6 @@ const styles = StyleSheet.create({
   switchRow: { flexDirection: 'row', alignItems: 'center', minHeight: 48, gap: space.sm },
   flex: { flex: 1 },
   body: { fontSize: fontSize.body },
+  label: { fontSize: fontSize.body, fontWeight: '600' },
   caption: { fontSize: fontSize.caption },
 });

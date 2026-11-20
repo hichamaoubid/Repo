@@ -24,7 +24,12 @@
     "empty": "Your garden starts with one Fajr.",
     "streak_one": "{{count}} day kept",
     "streak_other": "{{count}} days kept",
-    "resting": "Your garden rested today."
+    "resting": "Your garden rested today.",
+    "welcomeBack": "Welcome back. One Fajr today and your garden grows again.",
+    "thisMonth_one": "{{count}} day kept this month",
+    "thisMonth_other": "{{count}} days kept this month",
+    "a11y_one": "Your garden: {{count}} plant, {{grown}} fully grown",
+    "a11y_other": "Your garden: {{count}} plants, {{grown}} fully grown"
   },
   "time": {
     "hours_one": "{{count}} h",
@@ -99,7 +104,11 @@
     "test": "Test the alarm (rings in {{seconds}} s)",
     "testScheduled": "The alarm will ring in {{seconds}} seconds. Lock your phone to try it.",
     "notificationTitle": "Fajr",
-    "notificationBody": "Complete your mission to stop the alarm"
+    "notificationBody": "Complete your mission to stop the alarm",
+    "mission": "Mission to stop it",
+    "missionMathLabel": "Solve 3 sums",
+    "missionStepsLabel": "Walk 30 steps",
+    "missionSteps": "To stop it, you walk 30 steps. If the phone cannot count steps, you get sums instead. If you stop it without the mission, it rings again every 2 minutes."
   },
   "mission": {
     "progress": "Sum {{current}} of {{total}}",
@@ -110,6 +119,19 @@
     "times": "times",
     "doneTitle": "Alarm stopped",
     "doneBody": "Time for Fajr.",
-    "backHome": "Back to home"
+    "backHome": "Back to home",
+    "stepsTitle": "Walk to stop the alarm",
+    "stepsCount": "{{steps}} / {{goal}} steps",
+    "stepsHint": "Keep the phone in your hand or pocket and walk around.",
+    "doneWatered": "Time for Fajr. Your garden was watered."
+  },
+  "checkin": {
+    "question": "Did you pray Fajr today?",
+    "onTime": "On time",
+    "late": "Late",
+    "kept": "Fajr kept today. Your garden was watered.",
+    "notYet": "Fajr today at {{time}}.",
+    "makeUp": "I made up yesterday's Fajr",
+    "private": "Only you can see this."
   }
 }
