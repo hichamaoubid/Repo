@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  # Pull requests get one run each. Pushes run only on the base branches, so a push
+  # to a PR branch no longer triggers a second, duplicate run.
+  pull_request:
+  push:
+    branches:
+      - main
+      - ccr-2bb69a2d-modrxj # current default branch of the repository
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  app:
+    name: Typecheck, lint, test (fajr-garden)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: fajr-garden
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: fajr-garden/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npx jest --ci --coverage
